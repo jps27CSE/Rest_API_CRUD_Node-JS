@@ -1,21 +1,22 @@
+const {
+  GetUsers,
+  PostUser,
+  GetSpecificUser,
+  DeleteUser,
+  UpdateUser,
+} = require("../controllers/user");
 const express = require("express");
-const { v4: uuidv4 } = require("uuid");
+
 const router = express.Router();
 
-const user = [];
+router.get("/", GetUsers);
 
-router.get("/", (req, res) => {
-  res.send(user);
-});
+router.post("/", PostUser);
 
-router.post("/", (req, res) => {
-  const users = req.body;
-  const userID = uuidv4();
-  const userWithID = { ...users, id: userID };
-  user.push(userWithID);
-  res.send(
-    `Registered with First Name : ${userWithID.firstName} Last Name : ${userWithID.lastName} Age : ${userWithID.age}`
-  );
-});
+router.get("/:id", GetSpecificUser);
+
+router.delete("/:id", DeleteUser);
+
+router.post("/:id", UpdateUser);
 
 module.exports = router;
