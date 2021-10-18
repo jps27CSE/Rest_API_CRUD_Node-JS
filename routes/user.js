@@ -1,27 +1,21 @@
 const express = require("express");
-
+const { v4: uuidv4 } = require("uuid");
 const router = express.Router();
 
-const user = [
-  {
-    firstName: "Jack",
-    lastName: "Pritom",
-    Age: 23,
-  },
-  {
-    firstName: "Partho",
-    lastName: "Ponuel",
-    Age: 27,
-  },
-];
+const user = [];
 
 router.get("/", (req, res) => {
-  console.log("i am in users");
   res.send(user);
 });
 
 router.post("/", (req, res) => {
-  console.log("route reached");
+  const users = req.body;
+  const userID = uuidv4();
+  const userWithID = { ...users, id: userID };
+  user.push(userWithID);
+  res.send(
+    `Registered with First Name : ${userWithID.firstName} Last Name : ${userWithID.lastName} Age : ${userWithID.age}`
+  );
 });
 
 module.exports = router;
